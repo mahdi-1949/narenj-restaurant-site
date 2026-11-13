@@ -20,6 +20,8 @@
   if (!prefersReducedMotion && 'IntersectionObserver' in window) {
     const revealGroups = [
       { selector: '.inner-hero-copy, .contact-page-heading', effect: 'from-right' },
+      { selector: '.page-breadcrumb, .story-step, .space-principle, .related-page-card', effect: 'rise', stagger: 55 },
+      { selector: '.space-table-feature', effect: 'from-left' },
       { selector: '.inner-hero-media', effect: 'from-left' },
       { selector: '.menu-category, .story-value, .space-gallery figure, .contact-page-cards .contact-item', effect: 'rise', stagger: 65 },
 
@@ -59,6 +61,29 @@
 
       revealItems.forEach((element) => revealObserver.observe(element));
     }
+  }
+
+  const menuNav = document.querySelector('[data-menu-nav]');
+  if (menuNav && 'IntersectionObserver' in window) {
+    const categoryItems = [...menuNav.querySelectorAll('a[href^="#"]')]
+      .map((link) => ({ link, section: document.querySelector(link.getAttribute('href')) }))
+      .filter((item) => item.section);
+    const markCurrent = (activeLink) => {
+      categoryItems.forEach(({ link }) => {
+        if (link === activeLink) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    };
+    categoryItems.forEach(({ link }) => link.addEventListener('click', () => markCurrent(link)));
+    const categoryObserver = new IntersectionObserver((entries) => {
+      const visible = entries.filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (visible) {
+        const item = categoryItems.find(({ section }) => section === visible.target);
+        if (item) markCurrent(item.link);
+      }
+    }, { rootMargin: '-18% 0px -68% 0px', threshold: [0, 0.15, 0.35] });
+    categoryItems.forEach(({ section }) => categoryObserver.observe(section));
   }
 
   const year = document.querySelector('[data-year]');
