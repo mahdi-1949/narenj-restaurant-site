@@ -16,6 +16,10 @@
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!prefersReducedMotion && 'IntersectionObserver' in window) {
     const revealGroups = [
+      { selector: '.inner-hero-copy, .contact-page-heading', effect: 'from-right' },
+      { selector: '.inner-hero-media', effect: 'from-left' },
+      { selector: '.menu-category, .story-value, .space-gallery figure, .contact-page-cards .contact-item', effect: 'rise', stagger: 65 },
+
       { selector: '.hero-content > .eyebrow, .hero-content > h1, .hero-content > .hero-lead, .hero-content > .hero-actions, .hero-content > .hero-caption', effect: 'rise', stagger: 55 },
       { selector: '.highlight', effect: 'rise', stagger: 65 },
       { selector: '.story-copy', effect: 'from-right' },
