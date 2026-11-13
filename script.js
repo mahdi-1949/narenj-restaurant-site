@@ -13,6 +13,47 @@
     window.addEventListener('pageshow', updateHeaderAppearance);
   }
 
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!prefersReducedMotion && 'IntersectionObserver' in window) {
+    const revealGroups = [
+      { selector: '.hero-content > .eyebrow, .hero-content > h1, .hero-content > .hero-lead, .hero-content > .hero-actions, .hero-content > .hero-caption', effect: 'rise', stagger: 55 },
+      { selector: '.highlight', effect: 'rise', stagger: 65 },
+      { selector: '.story-copy', effect: 'from-right' },
+      { selector: '.story-art', effect: 'from-left' },
+      { selector: '.section-heading', effect: 'rise' },
+      { selector: '.menu-card', effect: 'rise', stagger: 70 },
+      { selector: '.menu-note, .menu-more', effect: 'rise', stagger: 55 },
+      { selector: '.atmosphere-copy', effect: 'from-right' },
+      { selector: '.atmosphere-visual', effect: 'from-left' },
+      { selector: '.contact-intro', effect: 'from-right' },
+      { selector: '.contact-item', effect: 'rise', stagger: 60 },
+      { selector: '.footer-brand-block, .footer-column, .footer-cta', effect: 'rise', stagger: 55 }
+    ];
+    const revealItems = [];
+
+    revealGroups.forEach(({ selector, effect, stagger = 0 }) => {
+      document.querySelectorAll(selector).forEach((element, index) => {
+        if (element.dataset.reveal) return;
+        element.dataset.reveal = effect;
+        element.style.setProperty('--reveal-delay', `${index * stagger}ms`);
+        revealItems.push(element);
+      });
+    });
+
+    if (revealItems.length) {
+      document.documentElement.classList.add('has-reveal-motion');
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -32px 0px' });
+
+      revealItems.forEach((element) => revealObserver.observe(element));
+    }
+  }
+
   const year = document.querySelector('[data-year]');
   if (year) year.textContent = new Intl.NumberFormat('fa-IR', { useGrouping: false }).format(new Date().getFullYear());
 
