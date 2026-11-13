@@ -541,3 +541,36 @@ html{scroll-padding-top:84px}
   .primary-nav{top:calc(100% + 6px)}
   .hero{min-height:min(760px,calc(100svh - 66px))}
 }
+
+
+/* Mobile header order and menu action placement */
+.mobile-nav-cta{display:none}
+@media(max-width:760px){
+  .brand{order:2}
+  .menu-toggle{order:1}
+  .site-header .header-inner>.header-cta{display:none}
+  .primary-nav{
+    max-height:calc(100svh - 96px);
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  .mobile-nav-cta{
+    display:flex;
+    width:100%;
+    min-height:46px;
+    justify-content:center;
+    margin-top:8px;
+    padding:10px 16px;
+    border-radius:2px;
+    background:var(--orange);
+    color:var(--white);
+    box-shadow:0 6px 16px rgba(7,24,17,.18);
+  }
+  .mobile-nav-cta:hover,.mobile-nav-cta:focus-visible{
+    background:var(--orange-dark);
+    color:var(--white);
+  }
+}
+@media(max-width:420px){
+  .mobile-nav-cta{min-height:44px;font-size:11px}
+}
