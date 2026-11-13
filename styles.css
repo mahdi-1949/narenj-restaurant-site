@@ -352,3 +352,6 @@ html{scroll-padding-top:84px}
  .atmosphere-secondary{width:45%;height:142px;border-width:5px}
 }
 @media(prefers-reduced-motion:reduce){.menu-photo,.menu-card,.button{transition:none!important}}
+
+.menu-photo-label{top:16px;right:16px;bottom:auto;height:auto;min-height:0;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap}
+@media(max-width:760px){.highlights{border-radius:2px}}
