@@ -357,20 +357,10 @@ html{scroll-padding-top:84px}
 @media(max-width:760px){.highlights{border-radius:2px}}
 
 
-/* Compact editorial contact section */
-.contact-section{
-  margin-bottom:0;
-  padding:64px 0 72px;
-  border:0;
-  border-block:1px solid rgba(222,216,204,.9);
-  border-radius:0;
-  background:transparent;
-  box-shadow:none;
+/* Align contact text beside icons in the RTL layout */
+.contact-item,.contact-item:last-child{
+  direction:rtl;
+  justify-content:flex-start;
+  gap:16px;
 }
-.contact-grid{gap:0}
-.contact-item,.contact-item:last-child{min-height:66px;padding:10px 0}
-@media(max-width:760px){
-  .contact-section{gap:20px;padding-block:56px 62px}
-  .contact-grid{gap:0}
-  .contact-item,.contact-item:last-child{min-height:64px;padding:10px 0}
-}
+.contact-item>div{text-align:right}
