@@ -1,4 +1,18 @@
 (() => {
+  const header = document.querySelector('.site-header');
+  if (header) {
+    const updateHeaderAppearance = () => {
+      const progress = Math.min(Math.max(window.scrollY / 140, 0), 1);
+      header.style.setProperty('--header-opacity', (0.34 + progress * 0.66).toFixed(3));
+      header.style.setProperty('--nav-opacity', (0.72 + progress * 0.27).toFixed(3));
+      header.classList.toggle('is-scrolled', progress >= 0.08);
+    };
+
+    updateHeaderAppearance();
+    window.addEventListener('scroll', updateHeaderAppearance, { passive: true });
+    window.addEventListener('pageshow', updateHeaderAppearance);
+  }
+
   const year = document.querySelector('[data-year]');
   if (year) year.textContent = new Intl.NumberFormat('fa-IR', { useGrouping: false }).format(new Date().getFullYear());
 
