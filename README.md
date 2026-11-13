@@ -16,7 +16,13 @@
 - `script.js`: منوی موبایل و نمایش خودکار سال جاری
 - `assets/narenj-hero.webp`: تصویر بخش اصلی
 - `assets/narenj-interior.webp`: تصویر فضای داخلی
+- `assets/fonts/vazirmatn-variable.woff2`: فونت متغیر وزیرمتن برای متن‌های فارسی و عربی
+- `assets/fonts/OFL.txt`: مجوز فونت وزیرمتن
 - `.github/workflows/pages.yml`: گردش‌کار دستی انتشار
+
+## فونت
+
+فونت **Vazirmatn 33.0.3** از مخزن رسمی [rastikerdar/vazirmatn](https://github.com/rastikerdar/vazirmatn) آمده و با مجوز SIL Open Font License 1.1 توزیع می‌شود. فایل و مجوز در همین مخزن نگهداری می‌شوند تا نمایش متن به سرویس فونت خارجی وابسته نباشد.
 
 ## محتوای نمونه
 
