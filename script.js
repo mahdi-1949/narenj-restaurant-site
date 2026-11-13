@@ -1,4 +1,7 @@
 (() => {
+  const year = document.querySelector('[data-year]');
+  if (year) year.textContent = new Intl.NumberFormat('fa-IR', { useGrouping: false }).format(new Date().getFullYear());
+
   const toggle = document.querySelector('.menu-toggle');
   const nav = document.querySelector('#primary-nav');
   if (!toggle || !nav) return;
