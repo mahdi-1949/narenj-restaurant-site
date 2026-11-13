@@ -64,7 +64,7 @@
   }
 
   const menuNav = document.querySelector('[data-menu-nav]');
-  if (menuNav && 'IntersectionObserver' in window) {
+  if (menuNav) {
     const categoryItems = [...menuNav.querySelectorAll('a[href^="#"]')]
       .map((link) => ({ link, section: document.querySelector(link.getAttribute('href')) }))
       .filter((item) => item.section);
@@ -74,16 +74,9 @@
         else link.removeAttribute('aria-current');
       });
     };
+    const initialItem = categoryItems.find(({ link }) => link.getAttribute('href') === window.location.hash) || categoryItems[0];
+    if (initialItem) markCurrent(initialItem.link);
     categoryItems.forEach(({ link }) => link.addEventListener('click', () => markCurrent(link)));
-    const categoryObserver = new IntersectionObserver((entries) => {
-      const visible = entries.filter((entry) => entry.isIntersecting)
-        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (visible) {
-        const item = categoryItems.find(({ section }) => section === visible.target);
-        if (item) markCurrent(item.link);
-      }
-    }, { rootMargin: '-18% 0px -68% 0px', threshold: [0, 0.15, 0.35] });
-    categoryItems.forEach(({ section }) => categoryObserver.observe(section));
   }
 
   const year = document.querySelector('[data-year]');
