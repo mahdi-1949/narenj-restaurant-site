@@ -24,7 +24,7 @@ jobs:
       - name: Prepare static files
         run: |
           mkdir -p dist
-          cp index.html styles.css script.js .nojekyll dist/
+          cp *.html styles.css script.js .nojekyll dist/
           cp -R assets dist/assets
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
