@@ -3,8 +3,11 @@
   if (header) {
     const updateHeaderAppearance = () => {
       const progress = Math.min(Math.max(window.scrollY / 140, 0), 1);
-      header.style.setProperty('--header-opacity', (0.34 + progress * 0.66).toFixed(3));
-      header.style.setProperty('--nav-opacity', (0.72 + progress * 0.27).toFixed(3));
+      const innerPage = document.body.classList.contains('inner-page');
+      const headerStart = innerPage ? 0.82 : 0.34;
+      const navStart = innerPage ? 0.90 : 0.72;
+      header.style.setProperty('--header-opacity', (headerStart + progress * (1 - headerStart)).toFixed(3));
+      header.style.setProperty('--nav-opacity', (navStart + progress * (0.99 - navStart)).toFixed(3));
       header.classList.toggle('is-scrolled', progress >= 0.08);
     };
 
