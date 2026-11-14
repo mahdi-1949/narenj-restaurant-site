@@ -39,6 +39,7 @@
       el.hidden = true;
     }
   });
+  document.querySelectorAll('[data-map-pending]').forEach(el => { el.hidden = Boolean(config.mapUrl); });
   document.querySelectorAll('[data-config-whatsapp]').forEach(el => {
     const whatsapp = String(config.whatsapp || '').replace(/\D/g, '');
     if (whatsapp) {
@@ -60,11 +61,11 @@
   // Menu filtering and search
   const menuRoot = document.querySelector('[data-menu-browser]');
   if (menuRoot) {
-    const search = menuRoot.querySelector('[data-menu-search]');
-    const filters = [...menuRoot.querySelectorAll('[data-menu-filter]')];
+    const search = document.querySelector('[data-menu-search]');
+    const filters = [...document.querySelectorAll('[data-menu-filter]')];
     const items = [...menuRoot.querySelectorAll('[data-menu-item]')];
-    const count = menuRoot.querySelector('[data-menu-count]');
-    const empty = menuRoot.querySelector('[data-menu-empty]');
+    const count = document.querySelector('[data-menu-count]');
+    const empty = document.querySelector('[data-menu-empty]');
     let active = 'all';
     const normalize = value => String(value || '').toLocaleLowerCase('fa-IR')
       .replace(/[يى]/g, 'ی').replace(/ك/g, 'ک')
