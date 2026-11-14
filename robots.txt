@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mahdi-1949.github.io/narenj-restaurant-site/sitemap.xml
