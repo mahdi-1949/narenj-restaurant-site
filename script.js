@@ -20,6 +20,11 @@
   if (!prefersReducedMotion && 'IntersectionObserver' in window) {
     const revealGroups = [
       { selector: '.inner-hero-copy, .contact-page-heading', effect: 'from-right' },
+      { selector: '.dp-intro-main, .dp-intro-text, .dp-image-story-panel, .dp-ethos-heading, .dp-gallery-head, .dp-final-copy', effect: 'rise', stagger: 60 },
+      { selector: '.dp-ethos-card', effect: 'rise', stagger: 90 },
+      { selector: '.dp-gallery-grid figure', effect: 'rise', stagger: 90 },
+      { selector: '.dp-final-image', effect: 'from-left' },
+
       { selector: '.page-breadcrumb, .story-step, .space-principle, .related-page-card', effect: 'rise', stagger: 55 },
       { selector: '.space-table-feature', effect: 'from-left' },
       { selector: '.inner-hero-media', effect: 'from-left' },
