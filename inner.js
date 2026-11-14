@@ -12,6 +12,7 @@
       el.textContent = 'شماره تماس پس از دریافت اطلاعات رستوران ثبت می‌شود';
       el.removeAttribute('href');
       el.setAttribute('aria-disabled', 'true');
+      el.setAttribute('tabindex', '-1');
     }
   });
   document.querySelectorAll('[data-config-email]').forEach(el => {
@@ -168,7 +169,8 @@
     img.addEventListener('error', () => {
       if (img.dataset.fallbackUsed) return;
       img.dataset.fallbackUsed = 'true';
-      img.src = img.closest('.menu-item, .gallery-card') ? 'assets/narenj-hero.webp' : 'assets/narenj-dining-room.webp';
+      const isFood = img.closest('.menu-item') || /غذا|کباب|فسنجان|برنج|پیش.?غذا|نوشیدنی/i.test(img.alt);
+      img.src = isFood ? 'assets/narenj-hero.webp' : 'assets/narenj-dining-room.webp';
     });
   });
 })();
