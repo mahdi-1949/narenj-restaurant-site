@@ -63,20 +63,42 @@
     }
   }
 
-  const menuNav = document.querySelector('[data-menu-nav]');
-  if (menuNav) {
-    const categoryItems = [...menuNav.querySelectorAll('a[href^="#"]')]
-      .map((link) => ({ link, section: document.querySelector(link.getAttribute('href')) }))
-      .filter((item) => item.section);
-    const markCurrent = (activeLink) => {
-      categoryItems.forEach(({ link }) => {
-        if (link === activeLink) link.setAttribute('aria-current', 'location');
-        else link.removeAttribute('aria-current');
+  const menuBrowser = document.querySelector('[data-menu-browser]');
+  if (menuBrowser) {
+    const searchInput = menuBrowser.querySelector('#menu-search');
+    const filters = [...menuBrowser.querySelectorAll('[data-menu-filter]')];
+    const categories = [...menuBrowser.querySelectorAll('[data-menu-category]')];
+    const resultCount = menuBrowser.querySelector('[data-menu-results]');
+    const emptyState = menuBrowser.querySelector('[data-menu-empty]');
+    let activeCategory = 'all';
+    const normalize = (value) => value.toLocaleLowerCase('fa-IR')
+      .replace(/[يى]/g, 'ی').replace(/ك/g, 'ک').replace(/[\\s\\u200c]+/g, '');
+    const updateMenu = () => {
+      const query = normalize(searchInput?.value || '');
+      let visibleCount = 0;
+      categories.forEach((category) => {
+        const categoryMatches = activeCategory === 'all' || category.dataset.menuCategory === activeCategory;
+        let categoryCount = 0;
+        category.querySelectorAll('[data-menu-item]').forEach((item) => {
+          const matchesQuery = !query || normalize(item.textContent).includes(query);
+          item.hidden = !(categoryMatches && matchesQuery);
+          if (!item.hidden) {
+            visibleCount += 1;
+            categoryCount += 1;
+          }
+        });
+        category.hidden = categoryCount === 0;
       });
+      filters.forEach((filter) => filter.setAttribute('aria-pressed', String(filter.dataset.menuFilter === activeCategory)));
+      if (resultCount) resultCount.textContent = `${new Intl.NumberFormat('fa-IR', { useGrouping: false }).format(visibleCount)} گزینه در فهرست`;
+      if (emptyState) emptyState.hidden = visibleCount !== 0;
     };
-    const initialItem = categoryItems.find(({ link }) => link.getAttribute('href') === window.location.hash) || categoryItems[0];
-    if (initialItem) markCurrent(initialItem.link);
-    categoryItems.forEach(({ link }) => link.addEventListener('click', () => markCurrent(link)));
+    filters.forEach((filter) => filter.addEventListener('click', () => {
+      activeCategory = filter.dataset.menuFilter || 'all';
+      updateMenu();
+    }));
+    searchInput?.addEventListener('input', updateMenu);
+    updateMenu();
   }
 
   const year = document.querySelector('[data-year]');
