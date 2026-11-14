@@ -101,6 +101,32 @@
     updateMenu();
   }
 
+
+  // Cinematic, scroll-linked image depth for the story page only.
+  const storyParallax = [...document.querySelectorAll('.story-page [data-parallax] img')];
+  if (storyParallax.length && !prefersReducedMotion) {
+    let ticking = false;
+    const updateStoryParallax = () => {
+      const viewport = window.innerHeight || 1;
+      storyParallax.forEach((img) => {
+        const rect = img.parentElement.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > viewport) return;
+        const progress = (viewport - rect.top) / (viewport + rect.height);
+        const offset = (progress - 0.5) * 34;
+        img.style.transform = `scale(1.12) translate3d(0, ${offset.toFixed(1)}px, 0)`;
+      });
+      ticking = false;
+    };
+    const requestStoryParallax = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(updateStoryParallax);
+    };
+    window.addEventListener('scroll', requestStoryParallax, { passive: true });
+    window.addEventListener('resize', requestStoryParallax, { passive: true });
+    requestStoryParallax();
+  }
+
   const year = document.querySelector('[data-year]');
   if (year) year.textContent = new Intl.NumberFormat('fa-IR', { useGrouping: false }).format(new Date().getFullYear());
 
