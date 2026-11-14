@@ -160,7 +160,7 @@
         data.get('message') || ''
       ].join('\n');
       if (status) status.textContent = 'پیش‌نویس پیام در برنامه ایمیل شما آماده می‌شود؛ برای ارسال نهایی آن را بررسی کنید.';
-      window.location.href = 'mailto:' + encodeURIComponent(email) + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+      window.location.href = 'mailto:' + email + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
     });
   }
 
